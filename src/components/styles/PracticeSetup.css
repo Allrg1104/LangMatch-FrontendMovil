@@ -1,0 +1,210 @@
+/* Variables globales */
+/* :root {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.8;
+  font-weight: 400;
+  color: #222;
+  background-color: #f0f2f5;
+} */
+
+/* Estilo general del cuerpo */
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #141e30, #243b55); /* Fondo oscuro elegante */
+}
+
+/* Contenedor principal */
+.assistant-layout {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 1200px;
+  background: rgba(255, 255, 255, 0.15); /* Efecto vidrio */
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+  padding: 20px;
+}
+
+/* Cabecera superior con usuario */
+.assistant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px; /* Reducido para que sea más compacto */
+  margin-top: 80px; /* Lo bajamos menos para equilibrar la estructura */
+  background: linear-gradient(to right, #1f3148, #302b78);
+  color: #ffffff;
+  font-size: 0.9rem; /* Tamaño más pequeño en el texto */
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3); /* Ajustado para que la sombra sea más discreta */
+}
+
+
+.user-info h2 {
+  font-size: 1.8rem;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.user-info p {
+  font-size: 1rem;
+  color: #ffffff;
+  margin: 5px 0;
+}
+
+/* Botón de cerrar sesión */
+.logout-button {
+  background: none;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: 0.3s ease-in-out;
+}
+
+.logout-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Contenedor del chat */
+.chat-container {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Cabecera del chat */
+.chat-header {
+  text-align: center;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.chat-header h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #faf5f4;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.chat-wrapper {
+  flex-grow: 1; /* Permite que el chat se expanda sin desbordar */
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-box {
+  height: 400px; /* Altura fija para evitar que se deforme */
+  overflow-y: auto; /* Permite desplazamiento */
+  display: flex;
+  flex-direction: column-reverse; /* Mantiene los mensajes recientes en la vista */
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message {
+  padding: 14px;
+  border-radius: 8px;
+  margin: 10px 0;
+  max-width: 80%;
+  font-size: 1.2rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+
+
+/* 📩 Mensaje del usuario */
+.user-message {
+  background: linear-gradient(to right, #cac8c8, #ece8ea);
+  color: #292727; /* Texto blanco */
+  align-self: flex-end;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  font-size: 0.6rem; /* Tamaño de fuente más pequeño */
+  text-align: right;
+}
+
+/* 🤖 Mensaje del asistente */
+.assistant-message {
+  background: rgba(255, 255, 255, 0.8); /* Fondo gris claro */
+  color: #000; /* Texto negro */
+  align-self: flex-start;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  font-size: 0.6rem; /* Tamaño de fuente más pequeño */
+  text-align: right;
+}
+
+
+
+/* Área de entrada */
+.input-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 14px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  color: #fff;
+}
+
+.input-area button {
+  background: linear-gradient(to right, #1f3148, #302b78);
+  color: #f8f6f6;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 50;
+  transition: 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.input-area button:hover {
+  background: linear-gradient(to right, #ff7730, #ff3377);
+}
+
+/* Pie de página */
+.assistant-footer {
+  text-align: center;
+  padding: 15px;
+  background: linear-gradient(to right, #141e30, #243b55);
+  color: #ffffff;
+  font-size: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.footer-text {
+  font-size: 0.9rem; /* Tamaño de fuente más pequeño */
+  font-weight: bold; /* Hace que resalte */
+  color: #ffffff; /* Mantiene el color blanco */
+  text-align: center; /* Centra el texto */
+  opacity: 0.8; /* Da un efecto más sutil */
+}
+
+

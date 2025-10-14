@@ -37,7 +37,7 @@ function LoginUser() {
                 }));
 
                 // Redirigir según el rol
-                navigate(data.user.rol === 'usuario' ? "/userHome" : "/adminHome");
+                navigate(data.user.rol === 'usuario' ? "/practiceSetup" : "/adminHome");
             } 
         } catch (error) {
             console.error('Error:', error);

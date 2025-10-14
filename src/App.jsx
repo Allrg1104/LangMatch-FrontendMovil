@@ -1,8 +1,9 @@
 import './App.css';
 import Form from './components/Form';
-import UserHome from './components/UserHome';
+import PracticeSetup from './components/PracticeSetup';
 import AdminHome from './components/AdminHome';
 import ChangePassword from './components/ChangePassword';
+import ChatBot from './components/ChatBot';
 import CreateUser from './components/CreateUser'; // Importa el nuevo componente
 import CreateAdmin from './components/CreateAdmin';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -15,9 +16,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route index element={<Form callback={setUser} />} />
-        <Route path='/userHome' element={<UserHome user={user} />} />
+        <Route path='/practiceSetup' element={<PracticeSetup user={user} />} />
         <Route path='/adminHome' element={<AdminHome user={user} />} />
         <Route path='/changePassword' element={<ChangePassword />} />
+        <Route path='/chatbot' element={<ChatBot />} />
         <Route path='/createUser' element={<CreateUser />} />
         <Route path='/createAdmin' element={<CreateAdmin />} />
       </Routes>
