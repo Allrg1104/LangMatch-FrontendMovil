@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./styles/ChatBot.css";
 
-// Función para dar formato a la hora
 const formatTimestamp = (timestamp) => {
   try {
     const date = timestamp instanceof Date ? timestamp : new Date(timestamp);
@@ -17,37 +16,30 @@ const formatTimestamp = (timestamp) => {
 
 function ChatBot() {
   const [user, setUser] = useState({ nombre: "", correo: "" });
-  const [session, setSession] = useState({ idioma: "", nivel: "" });
+  const [session, setSession] = useState({ idioma: "", nivel: "", sessionId: "" });
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
   const navigate = useNavigate();
 
-  // 🔹 Cargar datos del usuario y configuración de práctica
+  // 🔹 Cargar datos guardados
   useEffect(() => {
     const usuario = JSON.parse(localStorage.getItem("usuario"));
     const settings = JSON.parse(localStorage.getItem("practiceSettings"));
-
-    if (!usuario) {
-      navigate("/"); // si no hay usuario logueado
-      return;
-    }
-    if (!settings) {
-      navigate("/practiceSetup"); // si no hay configuración de práctica
-      return;
-    }
+    if (!usuario) return navigate("/");
+    if (!settings) return navigate("/practiceSetup");
 
     setUser(usuario);
     setSession(settings);
   }, [navigate]);
 
-  // 🔹 Scroll automático hacia el final del chat
+  // 🔹 Scroll automático al final del chat
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // 🔹 Enviar mensaje al backend (usuario y respuesta del bot)
+  // 🔹 Enviar mensaje al backend
   const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
 
@@ -64,31 +56,32 @@ function ChatBot() {
     setIsLoading(true);
 
     try {
-      // Enviar mensaje del usuario al backend (ajusta URL)
-      const response = await axios.post("http://localhost:5000/api/chatbot", {
-        mensaje: userMsg.content,
-        idioma: session.idioma,
-        nivel: session.nivel,
-        correo: user.correo,
+      const response = await axios.post("http://localhost:5000/api/chat/chatbot", {
+        prompt: userMsg.content,
+        userId: user._id,
+        sessionId: session.sessionId,
       });
 
       const botMsg = {
         id: Date.now() + 1,
         role: "assistant",
-        content: response.data.respuesta || "Lo siento, no tengo una respuesta en este momento.",
+        content:
+          response.data.response || "No tengo respuesta por ahora, intenta de nuevo.",
         timestamp: new Date(),
         displayTime: formatTimestamp(new Date()),
       };
 
+      // Mostrar ambos mensajes
       setMessages((prev) => [...prev, botMsg]);
+
     } catch (error) {
-      console.error("Error al enviar mensaje:", error);
+      console.error("❌ Error al enviar mensaje:", error);
       setMessages((prev) => [
         ...prev,
         {
           id: Date.now() + 2,
           role: "assistant",
-          content: "Error al procesar tu mensaje. Intenta de nuevo.",
+          content: "Error al procesar tu mensaje.",
           timestamp: new Date(),
           displayTime: formatTimestamp(new Date()),
         },
@@ -106,23 +99,30 @@ function ChatBot() {
     }
   };
 
-  // 🔹 Cerrar práctica y regresar a PracticeSetup
+  // 🔹 Cerrar práctica (guarda endTime y genera resumen)
   const handleClosePractice = async () => {
     try {
-      await axios.post("http://localhost:5000/api/practices/finalizar", {
-        correo: user.correo,
-        idioma: session.idioma,
+      const res = await axios.post("http://localhost:5000/api/chat/practice/end", {
+        sessionId: session.sessionId,
       });
+
+      if (res.data.success) {
+        const r = res.data.resumen;
+        alert(
+          `✅ Práctica finalizada\n\n🗣️ Idioma: ${r.idioma}\n📘 Nivel: ${r.nivel}\n🕒 Duración: ${r.duracion}\n💬 Mensajes: ${r.totalMensajes}`
+        );
+      }
     } catch (error) {
-      console.warn("No se pudo registrar el cierre de la práctica:", error);
+      console.error("❌ Error al finalizar práctica:", error);
+      alert("No se pudo finalizar la práctica correctamente.");
     } finally {
+      localStorage.removeItem("practiceSettings");
       navigate("/practiceSetup");
     }
   };
 
   return (
     <div className="assistant-layout">
-      {/* Encabezado con información del usuario */}
       <header className="assistant-header">
         <div className="user-info">
           <h2>{user.nombre || "Usuario"}</h2>
@@ -133,7 +133,6 @@ function ChatBot() {
         </button>
       </header>
 
-      {/* Chat principal */}
       <main className="chat-container">
         <section className="chat-header">
           <h2>
@@ -169,7 +168,6 @@ function ChatBot() {
           )}
         </div>
 
-        {/* Entrada de texto */}
         <div className="input-area">
           <input
             type="text"
@@ -189,7 +187,6 @@ function ChatBot() {
         </div>
       </main>
 
-      {/* Pie de página */}
       <footer className="assistant-footer">
         <p className="footer-text">&copy; 2025 SOMMER IA - Asistente Virtual.</p>
       </footer>
