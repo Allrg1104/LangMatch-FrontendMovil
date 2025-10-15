@@ -26,19 +26,37 @@ function PracticeSetup() {
       .catch((err) => console.error(err));
   }, [user]);
 
-const handleStartPractice = () => {
-  axios.post("http://localhost:5000/api/chat/practice/start", {
-    usuarioId: user._id,
-    idioma,
-    nivel,
-  })
-  .then(res => {
-    localStorage.setItem("sessionId", res.data.sessionId);
-    navigate("/chatbot");
-  })
-  .catch(error => {
+const handleStartPractice = async () => {
+  const userId = user._id || user.id; // ✅ soporte para ambas variantes
+
+  if (!userId) {
+    alert("No se encontró el ID del usuario. Inicia sesión nuevamente.");
+    return;
+  }
+
+  try {
+    const res = await axios.post("http://localhost:5000/api/chat/practice/start", {
+      userId,
+      idioma,
+      nivel,
+    });
+
+    if (res.data.success) {
+      const sessionData = {
+        sessionId: res.data.sessionId,
+        idioma,
+        nivel,
+        userId,
+      };
+      localStorage.setItem("practiceSettings", JSON.stringify(sessionData));
+      navigate("/chatbot");
+    } else {
+      alert(res.data.message || "No se pudo iniciar la práctica.");
+    }
+  } catch (error) {
     console.error("Error al iniciar práctica:", error);
-  });
+    alert("Error al iniciar práctica. Revisa la consola.");
+  }
 };
 
   // Continuar práctica existente
@@ -115,7 +133,7 @@ const handleStartPractice = () => {
       </main>
 
       <footer className="assistant-footer">
-        <p>&copy; 2025 SOMMER IA - Asistente Virtual</p>
+        <p>&copy; 2025 ELOY IA - ChatBot Educativo</p>
       </footer>
     </div>
   );
