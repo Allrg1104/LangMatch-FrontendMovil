@@ -1,210 +1,163 @@
-/* Variables globales */
-/* :root {
-  font-family: 'Arial', sans-serif;
-  line-height: 1.8;
-  font-weight: 400;
-  color: #222;
-  background-color: #f0f2f5;
-} */
-
-/* Estilo general del cuerpo */
+/* 🌌 Fondo general */
 body {
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #141e30, #243b55); /* Fondo oscuro elegante */
+  background: linear-gradient(135deg, #141e30, #243b55);
+  font-family: 'Arial', sans-serif;
 }
 
-/* Contenedor principal */
+/* 🧠 Contenedor principal */
 .assistant-layout {
   display: flex;
   flex-direction: column;
-  width: 90%;
-  max-width: 1200px;
-  background: rgba(255, 255, 255, 0.15); /* Efecto vidrio */
+  width: 95%;
+  max-width: 1000px;
+  height: 90vh; /* ✅ Hace que todo encaje en la pantalla */
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(10px);
   overflow: hidden;
   padding: 20px;
 }
 
-/* Cabecera superior con usuario */
+/* 👤 Cabecera del usuario */
 .assistant-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px; /* Reducido para que sea más compacto */
-  margin-top: 80px; /* Lo bajamos menos para equilibrar la estructura */
+  padding: 12px 18px;
   background: linear-gradient(to right, #1f3148, #302b78);
-  color: #ffffff;
-  font-size: 0.9rem; /* Tamaño más pequeño en el texto */
+  color: #fff;
   border-radius: 10px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3); /* Ajustado para que la sombra sea más discreta */
+  font-size: 1rem;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
-
 .user-info h2 {
-  font-size: 1.8rem;
-  color: #ffffff;
-  font-weight: bold;
+  font-size: 1.5rem;
+  margin: 0;
 }
 
 .user-info p {
-  font-size: 1rem;
-  color: #ffffff;
-  margin: 5px 0;
+  font-size: 0.9rem;
+  margin: 0;
+  opacity: 0.9;
 }
 
-/* Botón de cerrar sesión */
 .logout-button {
   background: none;
-  border: 2px solid #ffffff;
-  color: #ffffff;
-  font-size: 1rem;
-  cursor: pointer;
-  padding: 8px;
+  border: 2px solid #fff;
+  color: #fff;
+  padding: 6px 12px;
   border-radius: 6px;
-  transition: 0.3s ease-in-out;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .logout-button:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.25);
 }
 
-/* Contenedor del chat */
+/* 💬 Contenedor del chat */
 .chat-container {
   flex: 1;
-  padding: 20px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  margin-top: 10px;
 }
 
-/* Cabecera del chat */
-.chat-header {
-  text-align: center;
-  padding-bottom: 15px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-}
-
-.chat-header h2 {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #faf5f4;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-.chat-wrapper {
-  flex-grow: 1; /* Permite que el chat se expanda sin desbordar */
-  display: flex;
-  flex-direction: column;
-}
-
+/* 🧩 Área de mensajes */
 .chat-box {
-  height: 400px; /* Altura fija para evitar que se deforme */
-  overflow-y: auto; /* Permite desplazamiento */
-  display: flex;
-  flex-direction: column-reverse; /* Mantiene los mensajes recientes en la vista */
-}
-
-.messages {
+  flex: 1;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
+  padding: 15px;
   gap: 10px;
+  scroll-behavior: smooth;
 }
 
+/* 💭 Mensajes */
 .message {
-  padding: 14px;
-  border-radius: 8px;
-  margin: 10px 0;
-  max-width: 80%;
-  font-size: 1.2rem;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  padding: 12px 16px;
+  border-radius: 10px;
+  max-width: 75%;
+  word-wrap: break-word;
+  font-size: 0.95rem;
 }
 
-
-
-/* 📩 Mensaje del usuario */
 .user-message {
   background: linear-gradient(to right, #cac8c8, #ece8ea);
-  color: #292727; /* Texto blanco */
+  color: #292727;
   align-self: flex-end;
-  padding: 12px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  font-size: 0.6rem; /* Tamaño de fuente más pequeño */
   text-align: right;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
 }
 
-/* 🤖 Mensaje del asistente */
 .assistant-message {
-  background: rgba(255, 255, 255, 0.8); /* Fondo gris claro */
-  color: #000; /* Texto negro */
+  background: rgba(255, 255, 255, 0.8);
+  color: #000;
   align-self: flex-start;
-  padding: 12px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  font-size: 0.6rem; /* Tamaño de fuente más pequeño */
-  text-align: right;
+  text-align: left;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-
-
-/* Área de entrada */
+/* ✍️ Área de entrada */
 .input-area {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 20px;
+  padding: 12px 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+  border-radius: 10px;
 }
 
 .input-area input {
   flex: 1;
-  padding: 14px;
-  border: 2px solid #ddd;
-  border-radius: 10px;
-  font-size: 1rem;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(8px);
+  padding: 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
   color: #fff;
+  font-size: 1rem;
+  outline: none;
+}
+
+.input-area input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .input-area button {
   background: linear-gradient(to right, #1f3148, #302b78);
-  color: #f8f6f6;
+  color: #fff;
   border: none;
-  padding: 12px 20px;
-  border-radius: 10px;
+  padding: 12px 18px;
+  border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
-  width: 50;
-  transition: 0.3s ease-in-out;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: 0.3s;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
 }
 
 .input-area button:hover {
   background: linear-gradient(to right, #ff7730, #ff3377);
 }
 
-/* Pie de página */
+/* ⚡ Pie de página */
 .assistant-footer {
   text-align: center;
-  padding: 15px;
-  background: linear-gradient(to right, #141e30, #243b55);
-  color: #ffffff;
-  font-size: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  font-size: 0.9rem;
+  color: #ffffffcc;
+  margin-top: 5px;
 }
 
-.footer-text {
-  font-size: 0.9rem; /* Tamaño de fuente más pequeño */
-  font-weight: bold; /* Hace que resalte */
-  color: #ffffff; /* Mantiene el color blanco */
-  text-align: center; /* Centra el texto */
-  opacity: 0.8; /* Da un efecto más sutil */
-}
 
 

@@ -24,15 +24,37 @@ function ChatBot() {
   const navigate = useNavigate();
 
   // 🔹 Cargar datos guardados
-  useEffect(() => {
-    const usuario = JSON.parse(localStorage.getItem("usuario"));
-    const settings = JSON.parse(localStorage.getItem("practiceSettings"));
-    if (!usuario) return navigate("/");
-    if (!settings) return navigate("/practiceSetup");
+useEffect(() => {
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
+  const settings = JSON.parse(localStorage.getItem("practiceSettings"));
+  if (!usuario) return navigate("/");
+  if (!settings) return navigate("/practiceSetup");
 
-    setUser(usuario);
-    setSession(settings);
-  }, [navigate]);
+  setUser(usuario);
+  setSession(settings);
+
+  // 👇 Mostrar el mensaje inicial de práctica
+  if (settings.sessionId) {
+    axios
+      .get(`http://localhost:5000/api/chat/practice/summary/${settings.sessionId}`)
+      .then(res => {
+        if (res.data && res.data.success && res.data.initialResponse) {
+          const botMsg = {
+            id: Date.now(),
+            role: "assistant",
+            content: res.data.initialResponse,
+            timestamp: new Date(),
+            displayTime: formatTimestamp(new Date()),
+          };
+          setMessages([botMsg]);
+        }
+      })
+      .catch(() => {
+        console.warn("No se pudo cargar el mensaje inicial de práctica.");
+      });
+  }
+}, [navigate]);
+
 
   // 🔹 Scroll automático al final del chat
   useEffect(() => {
@@ -56,11 +78,13 @@ function ChatBot() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/chat", { 
-        prompt: userMsg.content,
-        userId: user._id,
-        sessionId: session.sessionId,
+      const response = await axios.post("http://localhost:5000/api/chat/chatbot", { 
+        prompt: inputMessage.trim(),
+        userId: user._id || user.id || user.userId,  // ✅ compatibilidad total
+        sessionId: session.sessionId
       });
+
+
 
       const botMsg = {
         id: Date.now() + 1,

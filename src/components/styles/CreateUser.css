@@ -1,101 +1,157 @@
-/* CreateUser.css */
 body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    background-color: #f9f9f9; /* Fondo fresco y claro */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  background: linear-gradient(135deg, #141e30, #243b55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
 }
 
 .allcreateUser {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .container {
-    background-color: #ffffff; /* Fondo blanco del formulario */
-    border-radius: 12px; /* Bordes suaves */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-    padding: 30px;
-    width: 90%;
-    max-width: 400px; /* Tamaño máximo */
-}
-
-form {
-    display: flex;
-    flex-direction: column; /* Estructura vertical */
-    width: 100%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  padding: 50px 60px;
+  width: 100%;
+  max-width: 480px;
+  color: #fff;
+  text-align: center;
+  animation: fadeIn 0.4s ease;
 }
 
 h1 {
-    font-size: 24px;
-    color: #161616; /* Texto oscuro neutro */
-    margin-bottom: 20px;
-    text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
 }
 
-input:focus {
-    border-color: #0078d4; /* Azul moderno */
-    outline: none;
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 22px;
 }
 
 label {
-    font-size: 14px;
-    color: #555555;
-    margin-bottom: 10px;
+  font-size: 1rem;
+  color: #ddd;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+input {
+  padding: 14px 16px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  width: 100%;
+  transition: border 0.3s;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+input:focus {
+  border-color: #ff7730;
+  outline: none;
+}
+
+/* 👁️ Campo de contraseña con ícono */
+.password-field {
+  position: relative;
+  width: 100%;
+}
+
+.password-field input {
+  padding-right: 50px; /* Espacio para el ojo */
+}
+
+.password-toggle {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.3s ease;
+  font-size: 1.2rem;
+}
+
+.password-toggle:hover {
+  color: #fff;
 }
 
 button {
-    padding: 12px;
-    background-color: #0078d4; /* Azul fresco y moderno */
-    color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Efecto de transición */
-    margin-bottom: 10px;
+  padding: 14px;
+  background: linear-gradient(to right, #1f3148, #302b78);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  margin-top: 15px;
 }
 
 button:hover {
-    background-color: #005a9e; /* Azul más oscuro */
+  background: linear-gradient(to right, #ff7730, #ff3377);
 }
 
 .success {
-    color: green; /* Mensaje de éxito */
-    font-size: 14px;
-    margin-top: 10px;
+  color: #3ae374;
+  font-size: 0.9rem;
+  margin-top: 10px;
 }
 
 .error {
-    color: red; /* Mensaje de error */
-    font-size: 14px;
-    margin-top: 10px;
+  color: #ff4d4d;
+  font-size: 0.9rem;
+  margin-top: 10px;
 }
 
 .checkbox {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    color: #555555;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ddd;
+  font-size: 0.9rem;
+  margin: 10px 0;
 }
 
-@media (max-width: 768px) {
-    .container {
-        width: 95%;
-    }
+@media (max-width: 600px) {
+  .container {
+    width: 90%;
+    padding: 30px 25px;
+  }
 
-    h1 {
-        font-size: 20px; /* Ajuste para dispositivos pequeños */
-    }
+  h1 {
+    font-size: 1.6rem;
+  }
 }
 
-
-
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

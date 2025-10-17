@@ -13,7 +13,7 @@ form {
     background-color: #ffffff; /* Fondo blanco para el formulario */
     border-radius: 12px; /* Bordes suaves y modernos */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-    padding: 30px; /* Espacio interno */
+    padding: 50px; /* Espacio interno */
     max-width: 200px;
     width: 75%; /* Se adapta a dispositivos pequeños */
     text-align: center;

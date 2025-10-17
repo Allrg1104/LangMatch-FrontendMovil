@@ -1,5 +1,6 @@
 import './styles/CreateUser.css';
 import { useState } from 'react';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -83,8 +84,9 @@ function CreateUser() {
             </div>
 
             <div className="checkbox">
-              <label onClick={() => setShowPassword(!showPassword)}>
-                {showPassword ? 'Ocultar' : 'Mostrar'} Contraseña
+              <label onClick={() => setShowPassword(!showPassword)}
+                >
+                {showPassword ?  <FaEyeSlash /> : <FaEye />} 
               </label>
             </div>
 
