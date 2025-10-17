@@ -56,7 +56,7 @@ function ChatBot() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/chat/chatbot", {
+      const response = await axios.post("http://localhost:5000/api/chat", { 
         prompt: userMsg.content,
         userId: user._id,
         sessionId: session.sessionId,
@@ -188,7 +188,7 @@ function ChatBot() {
       </main>
 
       <footer className="assistant-footer">
-        <p className="footer-text">&copy; 2025 SOMMER IA - Asistente Virtual.</p>
+        <p className="footer-text">&copy; 2025 Thot IA - ChatBot Educativo.</p>
       </footer>
     </div>
   );

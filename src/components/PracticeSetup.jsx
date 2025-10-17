@@ -10,21 +10,28 @@ function PracticeSetup() {
   const [sessions, setSessions] = useState([]);
   const navigate = useNavigate();
 
-  // Cargar usuario
-  useEffect(() => {
-    const usuarioGuardado = localStorage.getItem("usuario");
-    if (!usuarioGuardado) return navigate("/");
-    setUser(JSON.parse(usuarioGuardado));
-  }, [navigate]);
+// Cargar usuario
+useEffect(() => {
+  const usuarioGuardado = localStorage.getItem("usuario");
+  if (!usuarioGuardado) return navigate("/");
+  const parsedUser = JSON.parse(usuarioGuardado);
+  setUser(parsedUser);
+}, [navigate]);
 
-  // Obtener sesiones del usuario
-  useEffect(() => {
-    if (!user._id) return;
-    axios
-      .get(`http://localhost:5000/api/practices/${user._id}`)
-      .then((res) => setSessions(res.data))
-      .catch((err) => console.error(err));
-  }, [user]);
+// ✅ Obtener sesiones del usuario (solo si ya existe user._id)
+useEffect(() => {
+  if (!user._id) return; // evita llamada vacía
+  console.log("🔹 Consultando prácticas del usuario:", user._id);
+
+  axios
+    .get(`http://localhost:5000/api/chat/practice/${user._id}`)
+    .then((res) => {
+      console.log("✅ Prácticas cargadas:", res.data);
+      setSessions(res.data);
+    })
+    .catch((err) => console.error("❌ Error obteniendo prácticas:", err));
+}, [user._id]); // ✅ importante que dependa de user._id
+
 
 const handleStartPractice = async () => {
   const userId = user._id || user.id; // ✅ soporte para ambas variantes
@@ -110,7 +117,7 @@ const handleStartPractice = async () => {
 
         {/* Panel de sesiones previas */}
         <section className="sessions-panel">
-          <h2>Mis prácticas</h2>
+          <h2>Mis prácticas ({sessions.length})</h2>
           {sessions.length === 0 ? (
             <p>No tienes prácticas guardadas.</p>
           ) : (
@@ -119,7 +126,7 @@ const handleStartPractice = async () => {
                 <li key={s._id} className="session-item">
                   <div>
                     <strong>{s.idioma.toUpperCase()}</strong> — Nivel {s.nivel}
-                    <p>Iniciada: {new Date(s.tiempoInicio).toLocaleString()}</p>
+                    <p>Iniciada: {new Date(s.startTime).toLocaleString()}</p>
                   </div>
                   <div className="session-buttons">
                     <button onClick={() => handleContinue(s)}>Continuar</button>
@@ -133,7 +140,7 @@ const handleStartPractice = async () => {
       </main>
 
       <footer className="assistant-footer">
-        <p>&copy; 2025 ELOY IA - ChatBot Educativo</p>
+        <p>&copy; 2025 Thot IA - ChatBot Educativo</p>
       </footer>
     </div>
   );
