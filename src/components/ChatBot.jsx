@@ -81,7 +81,9 @@ useEffect(() => {
       const response = await axios.post("http://localhost:5000/api/chat/chatbot", { 
         prompt: inputMessage.trim(),
         userId: user._id || user.id || user.userId,  // ✅ compatibilidad total
-        sessionId: session.sessionId
+        sessionId: session.sessionId,
+        idioma: session.idioma,
+        nivel: session.nivel,
       });
 
 
